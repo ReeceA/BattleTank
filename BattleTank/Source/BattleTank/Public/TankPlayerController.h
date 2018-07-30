@@ -17,7 +17,20 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
+
+	// Sets default values for this pawn's properties
+	ATankPlayerController();
+
 	ATank* GetContolledTank() const;
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 	
 	void BeginPlay() override;
+
+private:
+
+	void AimTowardsCrosshair();
+
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 };
