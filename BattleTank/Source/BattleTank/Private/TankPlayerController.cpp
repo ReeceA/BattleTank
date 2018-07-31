@@ -3,12 +3,6 @@
 #include "BattleTank.h"
 #include "TankPlayerController.h"
 
-ATankPlayerController::ATankPlayerController()
-{
-	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-}
-
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -44,17 +38,22 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector OutHitLocation; // out parameter
 	if (GetSightRayHitLocation(OutHitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *OutHitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *OutHitLocation.ToString());
 			//TODO tell tank to aim here
 	}
-
-	// get world location through crosshair
-	// if it hits landscape
-		// tell controlled tank to aim at this point
 }
 
+// get world location of line trace through croosshair, true if hit landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
-	OutHitLocation = FVector(1.0);
+	// find crosshair position
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+
+	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+
+	// de project the screen position of the crosshair to a world direction
+	// line trace along that direction, and see what we hit (up to max range)
 	return true;
 }
+
