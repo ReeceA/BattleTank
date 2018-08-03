@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "TankPlayerController.h"
 #include "BattleTank.h"
 #include "Engine/World.h"
-#include "TankPlayerController.h"
+
 
 void ATankPlayerController::BeginPlay()
 {
@@ -39,8 +40,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector OutHitLocation; // out parameter
 	if (GetSightRayHitLocation(OutHitLocation))	
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *OutHitLocation.ToString());
-			//TODO tell tank to aim here
+		GetContolledTank()->AimAt(OutHitLocation);
 	}
 }
 
